@@ -4,6 +4,7 @@ from config import Config
 from models import db
 from routes.tarefa_routes import tarefas_bp
 from controllers.tarefa_controller import TarefaController
+import os
 
 def criar_app():
     app = Flask(__name__)
@@ -15,9 +16,10 @@ def criar_app():
     app.register_blueprint(tarefas_bp)
     
     return app
-    
+
 if __name__ == '__main__':
     app = criar_app()
     with app.app_context():
         db.create_all()
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))  # Render define essa variável
+    app.run(host='0.0.0.0', port=port, debug=True)
